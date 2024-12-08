@@ -1,17 +1,24 @@
+/*
+Basic implementation of Linear Queues with Arrays.
+Read Comment Lines for clearer understanding.
+*/
+
 
 #include<stdio.h>
 #define MAX_SIZE 10
 int queue[MAX_SIZE];
-int front=-1,rear=-1;
+
+int front=-1,rear=-1; // In Queues, we use 2 variables to keep track of the number of elements in queue. Empty, uninitialised queue means front and rear both are equal to -1.
+
 int queueisFull(void);
 int queueisEmpty(void);
 void enqueue(int);
 int dequeue(void);
 void printQueue(void);
 
-int queueisFull(void)
+int queueisFull(void) 
 {
-    if(rear==MAX_SIZE-1)
+    if(rear==MAX_SIZE-1) //Since, everytime I enqueue an element, my rear keeps on incrementing, if my rear is equal to the MAXIMUM-1 index in array, it means I have reached the end of queue. 
     {
         printf("Queue is Full\n");
         return 1;
@@ -24,7 +31,7 @@ int queueisFull(void)
 
 int queueisEmpty(void)
 {
-    if(front==rear || rear == -1)
+    if(front==-1 && rear == -1) //Not a single element is present in the queue , so it checks out my initial front and rear conditions.
     {
         printf("Queue is Empty\n");
         return 1;
@@ -50,14 +57,18 @@ void enqueue(int number)
 
 int dequeue(void)
 {
-    int return_value=0;
+    int return_value=-1;
     if(queueisEmpty()==0)
     {
-        return_value=queue[front++];
-        if(front==MAX_SIZE-1)
+        return_value=queue[front];
+        if(front==rear)
         {
             front=-1;
             rear=-1;
+        }
+        else
+        {
+            front++;
         }
     }
     return return_value;
@@ -65,11 +76,18 @@ int dequeue(void)
 
 void printQueue(void)
 {
-    int initial=front;
-    while(initial<=rear)
+    if(queueisEmpty()==1)
     {
-        printf("%d\t",queue[initial]);
-        initial++;
+        printf("\nCan't print an empty queue");
+    }
+    else 
+    {
+        int initial=front;
+        while(initial<=rear)
+        {
+            printf("%d\t",queue[initial]);
+            initial++;
+        }
     }
 }
 void main()
